@@ -1,151 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deepthi Desharaju — AI Engineer</title>
+<meta name="description" content="AI Engineer building agentic LLM systems on real enterprise data. LangGraph, RAG, MCP, pgvector. 12+ years production data engineering.">
 <style>
 :root {
-  --bg:       #07101C;
-  --bg2:      #0C1825;
-  --surface:  #0F1E30;
-  --surface2: #162840;
-  --border:   #1E3550;
-  --accent:   #00BFFF;
-  --accent2:  #7C6BFF;
-  --green:    #3FB950;
-  --text:     #C8D8E8;
-  --muted:    #5E7A94;
-  --dim:      #2A4060;
-  --mono: 'JetBrains Mono','Fira Mono','Cascadia Code',monospace;
-  --sans: system-ui,-apple-system,sans-serif;
+  --bg:#07101C;--bg2:#0C1825;--surface:#0F1E30;--sur2:#162840;
+  --border:#1E3550;--acc:#00BFFF;--acc2:#7C6BFF;--green:#3FB950;
+  --text:#C8D8E8;--muted:#5E7A94;--dim:#2A4060;
+  --mono:'JetBrains Mono','Fira Mono',monospace;
+  --sans:system-ui,-apple-system,sans-serif;
 }
-@media(prefers-color-scheme:light){
-  :root{
-    --bg:#F2F6FB;--bg2:#E8EEF6;--surface:#FFFFFF;--surface2:#EBF2FA;
-    --border:#C5D5E8;--accent:#0077CC;--accent2:#5B4BE0;--green:#1A7F37;
-    --text:#0D1E30;--muted:#4A6580;--dim:#C0D0E0;
-  }
-}
-:root[data-theme="dark"]{--bg:#07101C;--bg2:#0C1825;--surface:#0F1E30;--surface2:#162840;--border:#1E3550;--accent:#00BFFF;--accent2:#7C6BFF;--green:#3FB950;--text:#C8D8E8;--muted:#5E7A94;--dim:#2A4060;}
-:root[data-theme="light"]{--bg:#F2F6FB;--bg2:#E8EEF6;--surface:#FFFFFF;--surface2:#EBF2FA;--border:#C5D5E8;--accent:#0077CC;--accent2:#5B4BE0;--green:#1A7F37;--text:#0D1E30;--muted:#4A6580;--dim:#C0D0E0;}
-
+@media(prefers-color-scheme:light){:root{
+  --bg:#F2F6FB;--bg2:#E8EEF6;--surface:#FFF;--sur2:#EBF2FA;
+  --border:#C5D5E8;--acc:#0077CC;--acc2:#5B4BE0;--green:#1A7F37;
+  --text:#0D1E30;--muted:#4A6580;--dim:#C0D0E0;
+}}
+:root[data-theme="dark"]{--bg:#07101C;--bg2:#0C1825;--surface:#0F1E30;--sur2:#162840;--border:#1E3550;--acc:#00BFFF;--acc2:#7C6BFF;--green:#3FB950;--text:#C8D8E8;--muted:#5E7A94;--dim:#2A4060;}
+:root[data-theme="light"]{--bg:#F2F6FB;--bg2:#E8EEF6;--surface:#FFF;--sur2:#EBF2FA;--border:#C5D5E8;--acc:#0077CC;--acc2:#5B4BE0;--green:#1A7F37;--text:#0D1E30;--muted:#4A6580;--dim:#C0D0E0;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-/* ── Nav ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0 32px;height:52px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px)}
-.nav-name{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,16,28,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.nav-name{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--acc)}
 .nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--accent)}
-@media(max-width:600px){.nav-links{display:none}}
-
-/* ── Hero ── */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 48px 80px;max-width:1100px;margin:0 auto}
-.hero-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
-.hero h1{font-family:var(--mono);font-size:clamp(36px,7vw,72px);font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--text);margin-bottom:16px;text-wrap:balance}
-.hero h1 .first{display:block}
-.hero h1 .last{color:var(--accent)}
-.hero-role{font-family:var(--mono);font-size:clamp(14px,2.5vw,20px);color:var(--muted);margin-bottom:32px;min-height:1.6em}
-.hero-role span{color:var(--accent2)}
-.hero-summary{max-width:620px;color:var(--muted);font-size:15px;line-height:1.75;margin-bottom:40px}
-.hero-links{display:flex;flex-wrap:wrap;gap:14px}
-.btn{font-family:var(--mono);font-size:12px;letter-spacing:.05em;padding:10px 22px;border-radius:6px;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
-.btn-primary{background:var(--accent);color:#07101C;font-weight:700}
-.btn-primary:hover{opacity:.85}
-.btn-ghost{border:1px solid var(--border);color:var(--text)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-.hero-stats{display:flex;flex-wrap:wrap;gap:32px;margin-top:56px;padding-top:40px;border-top:1px solid var(--border)}
-.hstat{font-family:var(--mono)}
-.hstat-num{font-size:28px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
-.hstat-label{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:.04em}
-
-/* ── Sections ── */
-.section{padding:80px 48px;max-width:1100px;margin:0 auto}
-.section-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
-.section-title{font-family:var(--mono);font-size:clamp(22px,4vw,34px);font-weight:700;letter-spacing:-.02em;color:var(--text);margin-bottom:36px;text-wrap:balance}
-.sep{border:none;border-top:1px solid var(--border);margin:0}
-
-/* ── Projects ── */
-.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-@media(max-width:700px){.projects-grid{grid-template-columns:1fr}}
-.project-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative;overflow:hidden;transition:border-color .25s}
-.project-card:hover{border-color:var(--accent)}
-.project-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:32px;border-color:var(--accent);background:linear-gradient(135deg,var(--surface) 0%,rgba(0,191,255,.04) 100%)}
-@media(max-width:700px){.project-card.featured{grid-template-columns:1fr}}
-.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .25s}
-.project-card:hover::before,.project-card.featured::before{opacity:1}
-.project-card.purple::before{background:var(--accent2)}
-.card-tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
-.card-tag.purple{color:var(--accent2)}
-.card-tag.green{color:var(--green)}
-.card-h{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px}
-.card-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
-.card-body{font-size:13.5px;color:var(--muted);line-height:1.7}
-.card-body p+p{margin-top:8px}
-.card-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
-.chip{font-family:var(--mono);font-size:10.5px;padding:3px 9px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
-.chip.accent{border-color:rgba(0,191,255,.3);color:var(--accent);background:rgba(0,191,255,.06)}
-.chip.purple{border-color:rgba(124,107,255,.3);color:var(--accent2);background:rgba(124,107,255,.06)}
-.card-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--accent);text-decoration:none;letter-spacing:.04em}
-.card-link:hover{text-decoration:underline}
-.featured-metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-content:start}
-.fmet{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px}
-.fmet-num{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
-.fmet-label{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:.04em}
-
-/* ── Timeline ── */
-.timeline{position:relative;padding-left:28px}
-.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--border)}
-.titem{position:relative;padding-bottom:40px}
-.titem:last-child{padding-bottom:0}
-.titem::before{content:'';position:absolute;left:-32px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
-.titem.purple::before{background:var(--accent2)}
-.titem.dim::before{background:var(--muted)}
-.t-header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:4px}
-.t-role{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--text)}
-.t-dates{font-family:var(--mono);font-size:11px;color:var(--muted)}
-.t-company{font-size:13px;color:var(--accent);margin-bottom:12px;font-weight:500}
-.t-company.purple{color:var(--accent2)}
-.t-bullets{list-style:none;display:grid;gap:7px}
-.t-bullets li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative;line-height:1.6}
-.t-bullets li::before{content:'▸';position:absolute;left:0;color:var(--dim);font-size:10px;top:4px}
-
-/* ── Skills ── */
-.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
-.skill-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px}
-.skill-group-name{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
-.skill-group.purple .skill-group-name{color:var(--accent2)}
-.skill-group.green .skill-group-name{color:var(--green)}
-.skill-tags{display:flex;flex-wrap:wrap;gap:7px}
-.stag{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
-
-/* ── Publication ── */
-.pub-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px;display:flex;gap:24px;align-items:flex-start}
-.pub-icon{font-size:28px;flex-shrink:0;margin-top:2px}
-.pub-title{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
-.pub-venue{font-size:13px;color:var(--accent);margin-bottom:10px}
-.pub-desc{font-size:13.5px;color:var(--muted)}
-
-/* ── Contact ── */
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-.contact-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;text-decoration:none;transition:border-color .2s;display:block}
-.contact-card:hover{border-color:var(--accent)}
-.contact-card.purple:hover{border-color:var(--accent2)}
-.contact-type{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.contact-val{font-family:var(--mono);font-size:13px;color:var(--text)}
-
-/* ── Footer ── */
-footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.06em;border-top:1px solid var(--border)}
-
-@media(max-width:600px){
-  .hero,.section{padding-left:24px;padding-right:24px}
-  .hero{padding-top:80px}
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.cursor{display:inline-block;width:2px;height:1.1em;background:var(--accent);margin-left:2px;vertical-align:text-bottom;animation:blink 1s step-end infinite}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--acc)}
+@media(max-width:580px){.nav-links{display:none}}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 48px 72px;max-width:1060px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:18px}
+h1{font-family:var(--mono);font-size:clamp(36px,7vw,72px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin-bottom:22px;text-wrap:balance}
+h1 em{font-style:normal;color:var(--acc)}
+.hero-tagline{font-size:clamp(15px,2.2vw,19px);color:var(--muted);margin-bottom:16px;max-width:560px;line-height:1.55}
+.hero-tagline strong{color:var(--text)}
+.hero-one{font-size:15px;color:var(--muted);max-width:500px;margin-bottom:34px;line-height:1.7}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:52px}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.05em;padding:11px 24px;border-radius:6px;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-p{background:var(--acc);color:#07101C;font-weight:700}.btn-p:hover{opacity:.85}
+.btn-g{border:1px solid var(--border);color:var(--muted)}.btn-g:hover{border-color:var(--acc);color:var(--acc)}
+.outcomes{display:flex;flex-wrap:wrap;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.out{flex:1;min-width:140px;padding:20px 24px;border-right:1px solid var(--border)}
+.out:last-child{border-right:none}
+.out-num{font-family:var(--mono);font-size:24px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;line-height:1}
+.out-num.gr{color:var(--green)}.out-num.bl{color:var(--acc)}
+.out-label{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.4}
+@media(max-width:640px){.out{min-width:50%;border-bottom:1px solid var(--border)}.out:nth-child(2n){border-right:none}.out:nth-last-child(-n+2){border-bottom:none}}
+.wrap{max-width:1060px;margin:0 auto;padding:72px 48px}
+@media(max-width:580px){.wrap,.hero{padding-left:24px;padding-right:24px}}
+.sep{border:none;border-top:1px solid var(--border)}
+.sec-eye{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+.sec-title{font-family:var(--mono);font-size:clamp(20px,3.5vw,30px);font-weight:700;letter-spacing:-.02em;color:var(--text);margin-bottom:36px;text-wrap:balance}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:680px){.proj-grid{grid-template-columns:1fr}}
+.pcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:28px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .25s,transform .2s}
+.pcard:hover{border-color:var(--acc);transform:translateY(-2px)}
+.pcard.p2:hover{border-color:var(--acc2)}
+.pcard::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc);opacity:0;transition:opacity .25s}
+.pcard:hover::after{opacity:1}
+.pcard.p2::after{background:var(--acc2)}
+.pcard.featured{grid-column:1/-1;border-color:rgba(0,191,255,.4)}
+.pcard.featured::after{opacity:1}
+.p-tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+.p-tag.p2{color:var(--acc2)}
+.p-name{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--text);margin-bottom:4px}
+.p-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+.feat-inner{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start}
+@media(max-width:680px){.feat-inner{grid-template-columns:1fr}}
+.feat-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-width:200px}
+.fmet{background:var(--sur2);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.fmet-n{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.fmet-l{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:3px}
+.pbr{display:grid;gap:13px;margin-bottom:20px}
+.pbr-row{display:grid;grid-template-columns:70px 1fr;gap:10px}
+.lbl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+.lbl.prob{color:var(--muted)}.lbl.built{color:var(--acc)}.lbl.b2{color:var(--acc2)}.lbl.result{color:var(--green)}
+.pbr-val{font-size:13.5px;color:var(--muted);line-height:1.6}
+.pbr-val strong{color:var(--text);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.chip{font-family:var(--mono);font-size:10.5px;padding:3px 9px;border-radius:4px;background:var(--sur2);border:1px solid var(--border);color:var(--muted)}
+.chip.a{border-color:rgba(0,191,255,.3);color:var(--acc);background:rgba(0,191,255,.06)}
+.chip.a2{border-color:rgba(124,107,255,.3);color:var(--acc2);background:rgba(124,107,255,.06)}
+.p-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px}
+.plink{font-family:var(--mono);font-size:11px;color:var(--acc);text-decoration:none}
+.plink:hover{text-decoration:underline}.plink.p2{color:var(--acc2)}
+.arch-box{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:8px;padding:24px 16px;overflow-x:auto;margin-top:28px}
+.arch-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.tl{position:relative;padding-left:26px}
+.tl::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:var(--border)}
+.ti{position:relative;padding-bottom:38px}.ti:last-child{padding-bottom:0}
+.ti::before{content:'';position:absolute;left:-30px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--acc);border:2px solid var(--bg)}
+.ti.p2::before{background:var(--acc2)}.ti.dm::before{background:var(--muted)}
+.ti-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:baseline;margin-bottom:3px}
+.ti-role{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--text)}
+.ti-dates{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.ti-co{font-size:13px;font-weight:500;color:var(--acc);margin-bottom:12px}
+.ti-co.p2{color:var(--acc2)}.ti-co.dm{color:var(--muted)}
+.ti-ul{list-style:none;display:grid;gap:7px}
+.ti-ul li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative;line-height:1.6}
+.ti-ul li::before{content:'▸';position:absolute;left:0;color:var(--dim);font-size:10px;top:4px}
+.ti-ul li strong{color:var(--text);font-weight:600}
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.skg{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px}
+.skg-name{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);margin-bottom:13px}
+.skg-name.p2{color:var(--acc2)}.skg-name.gr{color:var(--green)}
+.sk-tags{display:flex;flex-wrap:wrap;gap:6px}
+.st{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:4px;background:var(--sur2);border:1px solid var(--border);color:var(--muted)}
+.pub{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:26px;display:flex;gap:20px}
+.pub-icon{font-size:26px;flex-shrink:0;margin-top:2px}
+.pub-t{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.pub-v{font-size:13px;color:var(--acc);margin-bottom:8px}
+.pub-d{font-size:13.5px;color:var(--muted)}
+.ct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px}
+.ctc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;text-decoration:none;display:block;transition:border-color .2s}
+.ctc:hover{border-color:var(--acc)}.ctc.p2:hover{border-color:var(--acc2)}
+.ct-type{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.ct-val{font-family:var(--mono);font-size:13px;color:var(--text)}
+footer{text-align:center;padding:36px 20px;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.06em;border-top:1px solid var(--border)}
 </style>
+</head>
+<body>
 
-<!-- Nav -->
 <nav>
-  <span class="nav-name">DD //</span>
+  <span class="nav-name">Deepthi Desharaju //</span>
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -154,329 +132,269 @@ footer{text-align:center;padding:40px 20px;font-family:var(--mono);font-size:11p
   </ul>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
-  <div class="hero-eyebrow">Portfolio · AI Engineering · Bay Area, CA</div>
-  <h1>
-    <span class="first">Deepthi</span>
-    <span class="last">Desharaju</span>
-  </h1>
-  <div class="hero-role" id="role-line"><span id="role-text"></span><span class="cursor"></span></div>
-  <p class="hero-summary">
-    AI Engineer building agentic LLM systems on real enterprise data — LangGraph multi-step agents,
-    corrective RAG with hybrid retrieval, MCP tool servers, and evaluation/observability pipelines.
-    Grounded in 12+ years of production data engineering: I own the data, retrieval, and governance
-    layers where most agentic systems fail.
+  <div class="eyebrow">AI Engineer · Bay Area, CA · Open to Opportunities</div>
+  <h1>Building AI that<br>works on <em>real data</em></h1>
+  <p class="hero-tagline">
+    <strong>Agentic systems, RAG pipelines, and MCP tool servers</strong> —
+    grounded in 12 years of owning production data at enterprise scale.
   </p>
-  <div class="hero-links">
-    <a class="btn btn-primary" href="#projects">View My Work</a>
-    <a class="btn btn-ghost" href="https://github.com/DesharajuDeepthi" target="_blank">GitHub</a>
-    <a class="btn btn-ghost" href="https://linkedin.com/in/deepthidesharaju" target="_blank">LinkedIn</a>
-    <a class="btn btn-ghost" href="mailto:desharajudeepthi@gmail.com">Email</a>
+  <p class="hero-one">
+    Most agentic systems fail at the data and retrieval layer. I own that layer.
+    At Delta Dental I cut a 20-hour weekly process to 10 minutes,
+    then built the AI advisory system on top of the same data.
+  </p>
+  <div class="hero-btns">
+    <a class="btn btn-p" href="#projects">See My Work</a>
+    <a class="btn btn-g" href="https://github.com/DesharajuDeepthi" target="_blank">GitHub</a>
+    <a class="btn btn-g" href="https://linkedin.com/in/deepthidesharaju" target="_blank">LinkedIn</a>
+    <a class="btn btn-g" href="mailto:desharajudeepthi@gmail.com">Email Me</a>
   </div>
-  <div class="hero-stats">
-    <div class="hstat"><div class="hstat-num">12+</div><div class="hstat-label">Years in production data</div></div>
-    <div class="hstat"><div class="hstat-num">327</div><div class="hstat-label">Tests green on UpgradePilot</div></div>
-    <div class="hstat"><div class="hstat-num">1.00</div><div class="hstat-label">LLM eval score (CI gate)</div></div>
-    <div class="hstat"><div class="hstat-num">20h→10m</div><div class="hstat-label">Reporting time saved at Delta Dental</div></div>
+  <div class="outcomes">
+    <div class="out"><div class="out-num gr">20h→10m</div><div class="out-label">Weekly reporting time saved at Delta Dental</div></div>
+    <div class="out"><div class="out-num bl">327</div><div class="out-label">Tests green, 0 failures on UpgradePilot</div></div>
+    <div class="out"><div class="out-num gr">$200M+</div><div class="out-label">Revenue tracked in production pipelines</div></div>
+    <div class="out"><div class="out-num bl">12+</div><div class="out-label">Years in production data engineering</div></div>
   </div>
 </section>
 <hr class="sep">
 
-<!-- Projects -->
-<section class="section" id="projects">
-  <div class="section-label">Selected Work</div>
-  <div class="section-title">Projects</div>
+<div class="wrap" id="projects">
+  <div class="sec-eye">Selected Work</div>
+  <div class="sec-title">Projects</div>
 
-  <div class="projects-grid">
+  <div class="proj-grid">
 
-    <!-- UpgradePilot — featured -->
-    <div class="project-card featured">
-      <div>
-        <div class="card-tag">Flagship Project · Open Source</div>
-        <div class="card-h">UpgradePilot</div>
-        <div class="card-sub">Production-grade multi-tenant agentic migration intelligence</div>
-        <div class="card-body">
-          <p>Analyzes public GitHub repositories and generates evidence-validated Pydantic v1→v2 migration plans. Treats the repository as attacker-controlled input — never executes it.</p>
-          <p>Built end-to-end across 8 phases: GitHub OAuth multi-tenancy, LangGraph 5-agent pipeline, Redis job queue, delta detection across runs, pgvector semantic long-term memory (1536-dim IVFFlat), Prometheus + Grafana 11-panel dashboard, and a LangSmith CI eval gate.</p>
-          <p><strong style="color:var(--text)">Key design choice:</strong> zero changes to the core graph across all 8 V2 phases — every capability composes <em>around</em> LangGraph, not into it.</p>
+    <div class="pcard featured">
+      <div class="p-tag">Flagship · Open Source</div>
+      <div class="feat-inner">
+        <div>
+          <div class="p-name">UpgradePilot</div>
+          <div class="p-sub">Agentic repository migration intelligence — end-to-end production system</div>
+          <div class="pbr">
+            <div class="pbr-row">
+              <span class="lbl prob">Problem</span>
+              <span class="pbr-val">Pydantic v1→v2 migrations are easy to underestimate — mixed validators, runtime behavior, and dependency constraints across large codebases with no clear audit trail.</span>
+            </div>
+            <div class="pbr-row">
+              <span class="lbl built">Built</span>
+              <span class="pbr-val">Multi-tenant system across 8 phases: GitHub OAuth, LangGraph 5-agent pipeline (scan → interpret → risk → plan → report), Redis job queue, delta detection across runs, pgvector semantic memory that improves with every analysis, Prometheus + Grafana 11-panel dashboard, and a LangSmith CI eval gate.</span>
+            </div>
+            <div class="pbr-row">
+              <span class="lbl result">Result</span>
+              <span class="pbr-val"><strong>327 tests, 0 failures. Eval score 1.00/1.00</strong> (CI gate 0.70). &lt;10ms HTTP p95. Multiple external users tested live via ngrok. Zero changes to the core LangGraph graph across all 8 V2 phases.</span>
+            </div>
+          </div>
+          <div class="chips">
+            <span class="chip a">LangGraph</span><span class="chip a">pgvector</span><span class="chip a">LangSmith evals</span>
+            <span class="chip">FastAPI</span><span class="chip">GitHub OAuth</span><span class="chip">Redis</span>
+            <span class="chip">Prometheus + Grafana</span><span class="chip">Docker</span>
+          </div>
+          <div class="p-links">
+            <a class="plink" href="https://github.com/DesharajuDeepthi/codeshift-agent/tree/v2/multi-user-memory" target="_blank">→ GitHub</a>
+            <a class="plink" href="https://claude.ai/code/artifact/d53579bb-eb37-4cdd-a36d-6a6c3b7d831c" target="_blank">→ Live Showcase (eval output + architecture)</a>
+          </div>
         </div>
-        <div class="card-chips">
-          <span class="chip accent">LangGraph</span>
-          <span class="chip accent">pgvector</span>
-          <span class="chip accent">LangSmith</span>
-          <span class="chip">FastAPI</span>
-          <span class="chip">GitHub OAuth</span>
-          <span class="chip">Redis Queue</span>
-          <span class="chip">Prometheus</span>
-          <span class="chip">Grafana</span>
-          <span class="chip">Docker Compose</span>
-          <span class="chip">327 tests</span>
+        <div class="feat-metrics">
+          <div class="fmet"><div class="fmet-n" style="color:var(--green)">1.00</div><div class="fmet-l">Eval score / gate 0.70</div></div>
+          <div class="fmet"><div class="fmet-n" style="color:var(--green)">327</div><div class="fmet-l">Tests · 0 failures</div></div>
+          <div class="fmet"><div class="fmet-n">&lt;10ms</div><div class="fmet-l">HTTP p95 latency</div></div>
+          <div class="fmet"><div class="fmet-n">8</div><div class="fmet-l">Architecture phases</div></div>
         </div>
-        <a class="card-link" href="https://github.com/DesharajuDeepthi/codeshift-agent" target="_blank">→ github.com/DesharajuDeepthi/codeshift-agent</a>
-        <br>
-        <a class="card-link" href="https://claude.ai/code/artifact/d53579bb-eb37-4cdd-a36d-6a6c3b7d831c" target="_blank">→ Interactive Showcase (live eval output + architecture)</a>
       </div>
-      <div class="featured-metrics">
-        <div class="fmet"><div class="fmet-num">1.00</div><div class="fmet-label">Eval score / CI gate 0.70</div></div>
-        <div class="fmet"><div class="fmet-num">327</div><div class="fmet-label">Tests · 0 failures</div></div>
-        <div class="fmet"><div class="fmet-num">8</div><div class="fmet-label">Architecture phases</div></div>
-        <div class="fmet"><div class="fmet-num">&lt;10ms</div><div class="fmet-label">HTTP p95 latency</div></div>
-        <div class="fmet"><div class="fmet-num">1536</div><div class="fmet-label">pgvector embedding dims</div></div>
-        <div class="fmet"><div class="fmet-num">12,693</div><div class="fmet-label">Lines of Python</div></div>
+      <div class="arch-label" style="margin-top:28px">System Architecture</div>
+      <div class="arch-box">
+        <svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg" width="100%">
+          <defs>
+            <marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#00BFFF" opacity=".7"/></marker>
+            <marker id="ard" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3z" fill="#2A4060"/></marker>
+          </defs>
+          <rect x="10" y="130" width="100" height="66" rx="7" fill="#0C1825" stroke="#1E3550" stroke-width="1.5"/>
+          <text x="60" y="158" text-anchor="middle" font-family="monospace" font-size="10" fill="#5E7A94">GITHUB</text>
+          <text x="60" y="174" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">User</text>
+          <text x="60" y="188" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">OAuth 2.0</text>
+          <line x1="110" y1="163" x2="154" y2="163" stroke="#00BFFF" stroke-width="1.5" opacity=".7" marker-end="url(#ar)"/>
+          <rect x="156" y="130" width="92" height="66" rx="7" fill="#0C1825" stroke="#1E3550" stroke-width="1.5"/>
+          <text x="202" y="158" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">REVERSE PROXY</text>
+          <text x="202" y="175" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">nginx</text>
+          <text x="202" y="189" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">:8080</text>
+          <line x1="248" y1="152" x2="292" y2="132" stroke="#00BFFF" stroke-width="1.4" opacity=".7" marker-end="url(#ar)"/>
+          <line x1="248" y1="174" x2="292" y2="194" stroke="#00BFFF" stroke-width="1.4" opacity=".7" marker-end="url(#ar)"/>
+          <rect x="294" y="80" width="122" height="66" rx="7" fill="rgba(0,191,255,.08)" stroke="#00BFFF" stroke-width="1.5"/>
+          <text x="355" y="107" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#00BFFF">FASTAPI</text>
+          <text x="355" y="124" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">API + Auth</text>
+          <text x="355" y="139" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">JWT · OAuth · REST</text>
+          <rect x="294" y="177" width="122" height="66" rx="7" fill="#0C1825" stroke="#1E3550" stroke-width="1.5"/>
+          <text x="355" y="205" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#5E7A94">STREAMLIT</text>
+          <text x="355" y="222" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">UI</text>
+          <text x="355" y="237" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">ngrok public</text>
+          <line x1="416" y1="113" x2="460" y2="113" stroke="#00BFFF" stroke-width="1.4" opacity=".7" marker-end="url(#ar)"/>
+          <rect x="462" y="80" width="102" height="66" rx="7" fill="#0C1825" stroke="#1E3550" stroke-width="1.5"/>
+          <text x="513" y="107" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#5E7A94">JOB QUEUE</text>
+          <text x="513" y="124" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">Redis</text>
+          <text x="513" y="139" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">claim · retry</text>
+          <line x1="513" y1="146" x2="513" y2="182" stroke="#00BFFF" stroke-width="1.4" opacity=".7" marker-end="url(#ar)"/>
+          <rect x="450" y="184" width="128" height="76" rx="7" fill="rgba(0,191,255,.08)" stroke="#00BFFF" stroke-width="1.5"/>
+          <text x="514" y="208" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#00BFFF">LANGGRAPH</text>
+          <text x="514" y="225" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">Worker</text>
+          <text x="514" y="241" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">5 agents · delta</text>
+          <text x="514" y="254" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">checkpointer</text>
+          <line x1="450" y1="240" x2="412" y2="280" stroke="#00BFFF" stroke-width="1.4" opacity=".7" marker-end="url(#ar)"/>
+          <rect x="265" y="282" width="148" height="50" rx="7" fill="rgba(0,191,255,.06)" stroke="#00BFFF" stroke-width="1.5"/>
+          <text x="339" y="304" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#00BFFF">PGVECTOR · POSTGRES</text>
+          <text x="339" y="322" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">analyses · semantic memory · checkpoints</text>
+          <line x1="578" y1="228" x2="630" y2="228" stroke="#2A4060" stroke-width="1.2" marker-end="url(#ard)"/>
+          <rect x="632" y="195" width="112" height="62" rx="7" fill="#0C1825" stroke="#1E3550" stroke-width="1.5"/>
+          <text x="688" y="221" text-anchor="middle" font-family="monospace" font-size="9.5" fill="#5E7A94">TRACING + EVALS</text>
+          <text x="688" y="238" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#C8D8E8">LangSmith</text>
+          <text x="688" y="252" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">CI gate 0.70</text>
+          <line x1="355" y1="80" x2="355" y2="52" stroke="#2A4060" stroke-width="1.2"/>
+          <line x1="355" y1="36" x2="660" y2="36" stroke="#2A4060" stroke-width="1.2"/>
+          <line x1="660" y1="36" x2="660" y2="60" stroke="#2A4060" stroke-width="1.2" marker-end="url(#ard)"/>
+          <rect x="618" y="10" width="130" height="46" rx="7" fill="#0C1825" stroke="#1E3550" stroke-width="1.5"/>
+          <text x="683" y="30" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">PROMETHEUS + GRAFANA</text>
+          <text x="683" y="47" text-anchor="middle" font-family="monospace" font-size="9" fill="#5E7A94">11 dashboard panels</text>
+        </svg>
       </div>
     </div>
 
-    <!-- CallLens -->
-    <div class="project-card purple">
-      <div class="card-tag purple">MCP · LangGraph · Multi-Tenant</div>
-      <div class="card-h">CallLens</div>
-      <div class="card-sub">Identity-aware agentic call analytics platform</div>
-      <div class="card-body">
-        <p>100 B2B call transcripts → 6-node LangGraph pipeline with human-in-the-loop interrupt gates → Postgres with Row-Level Security → MCP server serving role-scoped answers to any LLM client (Claude Desktop, Codex).</p>
-        <p>Cost-aware hybrid design: rule-based classification handles ~91% of cases; LLM fallback only for ambiguous inputs. Total LLM spend under $1 across the corpus.</p>
+    <div class="pcard p2">
+      <div class="p-tag p2">MCP · LangGraph · Role-scoped</div>
+      <div class="p-name">CallLens</div>
+      <div class="p-sub">Identity-aware call analytics platform</div>
+      <div class="pbr">
+        <div class="pbr-row">
+          <span class="lbl prob">Problem</span>
+          <span class="pbr-val">B2B call insights were locked behind SQL — executives and CSMs couldn't self-serve role-appropriate answers from 100 transcripts.</span>
+        </div>
+        <div class="pbr-row">
+          <span class="lbl b2">Built</span>
+          <span class="pbr-val">6-node LangGraph pipeline with human-in-the-loop gates → Postgres with Row-Level Security → MCP server serving <strong>role-scoped answers to any LLM client</strong> (Claude Desktop, Codex). JWT claims thread through every tool call.</span>
+        </div>
+        <div class="pbr-row">
+          <span class="lbl result">Result</span>
+          <span class="pbr-val"><strong>~91% of queries handled by rule-based logic</strong>; LLM only for ambiguous cases. Total LLM spend under $1 across the corpus.</span>
+        </div>
       </div>
-      <div class="card-chips">
-        <span class="chip purple">MCP Server</span>
-        <span class="chip purple">LangGraph</span>
-        <span class="chip">Postgres RLS</span>
-        <span class="chip">JWT Auth</span>
-        <span class="chip">Langfuse</span>
-        <span class="chip">OpenTelemetry</span>
-        <span class="chip">LLM-as-judge</span>
+      <div class="chips">
+        <span class="chip a2">MCP Server</span><span class="chip a2">LangGraph</span>
+        <span class="chip">Postgres RLS</span><span class="chip">JWT</span><span class="chip">Langfuse</span><span class="chip">LLM-as-judge</span>
       </div>
-      <a class="card-link" href="https://github.com/DesharajuDeepthi/calllens" target="_blank">→ github.com/DesharajuDeepthi/calllens</a>
+      <div class="p-links">
+        <a class="plink p2" href="https://github.com/DesharajuDeepthi/calllens" target="_blank">→ github.com/DesharajuDeepthi/calllens</a>
+      </div>
     </div>
 
-    <!-- Research Copilot -->
-    <div class="project-card">
-      <div class="card-tag">Corrective RAG · Hallucination-resistant</div>
-      <div class="card-h">Research Copilot</div>
-      <div class="card-sub">Self-correcting retrieval agent over academic papers</div>
-      <div class="card-body">
-        <p>Self-correcting retrieval loop: grade → rewrite → live-API fallback → synthesize → verify. Hybrid BM25 + vector search with Reciprocal Rank Fusion on Qdrant.</p>
-        <p>Hallucination-resistant by construction: LLM relevance grading, groundedness checks, and deterministic citation verification ensuring every cited paper exists in the retrieved set.</p>
+    <div class="pcard">
+      <div class="p-tag">Corrective RAG · Hallucination-resistant</div>
+      <div class="p-name">Research Copilot</div>
+      <div class="p-sub">Self-correcting retrieval agent over academic papers</div>
+      <div class="pbr">
+        <div class="pbr-row">
+          <span class="lbl prob">Problem</span>
+          <span class="pbr-val">Standard RAG confidently hallucinates citations — researchers can't trust answers not grounded in real retrieved papers.</span>
+        </div>
+        <div class="pbr-row">
+          <span class="lbl built">Built</span>
+          <span class="pbr-val">Self-correcting loop: grade → rewrite → live-API fallback → synthesize → verify. <strong>Hybrid BM25 + vector search</strong> with Reciprocal Rank Fusion on Qdrant.</span>
+        </div>
+        <div class="pbr-row">
+          <span class="lbl result">Result</span>
+          <span class="pbr-val"><strong>Zero hallucinated citations by construction</strong> — deterministic citation verification as a hard gate, not a prompt instruction.</span>
+        </div>
       </div>
-      <div class="card-chips">
-        <span class="chip accent">Corrective RAG</span>
-        <span class="chip">Qdrant</span>
-        <span class="chip">BM25 + RRF</span>
-        <span class="chip">FastAPI</span>
-        <span class="chip">Streamlit</span>
-        <span class="chip">RAGAS</span>
+      <div class="chips">
+        <span class="chip a">Corrective RAG</span><span class="chip">Qdrant</span>
+        <span class="chip">BM25 + RRF</span><span class="chip">RAGAS</span><span class="chip">FastAPI</span>
       </div>
-      <a class="card-link" href="https://github.com/DesharajuDeepthi/corrective-rag-agent" target="_blank">→ github.com/DesharajuDeepthi/corrective-rag-agent</a>
-    </div>
-
-    <!-- Supply Chain -->
-    <div class="project-card purple">
-      <div class="card-tag purple">RAG · Streaming · ML Forecasting</div>
-      <div class="card-h">Supply Chain Analytics + RAG</div>
-      <div class="card-sub">Real-time finance pipeline + conversational analytics</div>
-      <div class="card-body">
-        <p>RAG chatbot over live Snowflake data (LangChain, FAISS, text-to-SQL) on a star-schema warehouse of 500K+ transactions. ML demand forecasting (Prophet/ARIMA, &lt;15% MAPE) and stockout prediction (~85% precision).</p>
-        <p>Streaming medallion: Yahoo Finance → Kafka → Snowpipe/CDC → 12 dbt incremental models → 11 executive dashboards.</p>
+      <div class="p-links">
+        <a class="plink" href="https://github.com/DesharajuDeepthi/corrective-rag-agent" target="_blank">→ github.com/DesharajuDeepthi/corrective-rag-agent</a>
       </div>
-      <div class="card-chips">
-        <span class="chip purple">LangChain</span>
-        <span class="chip">Snowflake</span>
-        <span class="chip">Kafka</span>
-        <span class="chip">dbt</span>
-        <span class="chip">Prophet/ARIMA</span>
-        <span class="chip">FAISS</span>
-        <span class="chip">Airflow</span>
-      </div>
-      <a class="card-link" href="https://github.com/DesharajuDeepthi" target="_blank">→ github.com/DesharajuDeepthi</a>
-    </div>
-
-  </div>
-</section>
-<hr class="sep">
-
-<!-- Experience -->
-<section class="section" id="experience">
-  <div class="section-label">Career</div>
-  <div class="section-title">Experience</div>
-
-  <div class="timeline">
-
-    <div class="titem">
-      <div class="t-header">
-        <span class="t-role">Data & AI Engineer</span>
-        <span class="t-dates">Nov 2024 – Present</span>
-      </div>
-      <div class="t-company">Delta Dental · Bay Area, CA</div>
-      <ul class="t-bullets">
-        <li>Building an agentic Risk Advisory system (LangGraph over security policies, CVE bulletins, SOPs) targeting elimination of 30+ hrs/week of manual on-call impact analysis.</li>
-        <li>MCP tool servers exposing Snowflake, Nucleus Security, and ticketing systems to multiple LLM clients; ChromaDB retrieval with RAGAS evaluation and end-to-end tracing via LangSmith + Langfuse.</li>
-        <li>Cut vulnerability status reporting from ~20 hours to under 10 minutes/week with Python (Pandas) pipelines over the Nucleus Security API feeding Power BI dashboards.</li>
-        <li>Delivered the Risk Acceptance dashboard used by the CFO and Board — eliminated ~20 hrs/week of manual board-prep work.</li>
-        <li>Snowflake + dbt warehouse consolidating 8+ legacy sources and 2M+ vulnerability records into a governed single source of truth with RBAC and row-level security.</li>
-      </ul>
-    </div>
-
-    <div class="titem purple">
-      <div class="t-header">
-        <span class="t-role">Senior BI Engineer</span>
-        <span class="t-dates">Mar 2024 – Sep 2024</span>
-      </div>
-      <div class="t-company purple">Up2Date Technology Solutions</div>
-      <ul class="t-bullets">
-        <li>Architected Snowflake dimensional models and 40+ dbt models (SCD2, 25+ data-quality tests) consolidating 12+ source systems at 5M+ records/month.</li>
-        <li>Time-series demand forecasting (Scikit-learn) cut stockouts 20%; A/B testing program drove a 12% margin increase.</li>
-      </ul>
-    </div>
-
-    <div class="titem dim">
-      <div class="t-header">
-        <span class="t-role">Senior BI Engineer</span>
-        <span class="t-dates">Jan 2017 – Aug 2022</span>
-      </div>
-      <div class="t-company" style="color:var(--muted)">Wipro Technologies · Philips & HSBC</div>
-      <ul class="t-bullets">
-        <li>AWS + Snowflake infrastructure processing 100GB+/day across 50M+ monthly transactions for 60+ finance/treasury/fraud stakeholders.</li>
-        <li>20+ dbt fact/dimension models with automated tests achieving 99.5% reliability and SOX compliance; RLS + column masking protecting PII for 10M+ customers.</li>
-        <li>Fraud-pattern analytics for HSBC credit portfolios.</li>
-      </ul>
-    </div>
-
-    <div class="titem dim">
-      <div class="t-header">
-        <span class="t-role">BI Developer → ETL Developer</span>
-        <span class="t-dates">2011 – 2017</span>
-      </div>
-      <div class="t-company" style="color:var(--muted)">Value Labs (Maxis Telecom) · TCS (CNA Investments)</div>
-      <ul class="t-bullets">
-        <li>Oracle PL/SQL ETL over 15M+ subscriber records/month; star/snowflake schemas tracking $200M+ revenue; 65% cut in processing time via incremental loads.</li>
-        <li>Production SQL/PLSQL pipelines for daily securities reporting; automated workflows reducing manual intervention 60%.</li>
-      </ul>
     </div>
 
   </div>
-</section>
+</div>
 <hr class="sep">
 
-<!-- Skills -->
-<section class="section" id="skills">
-  <div class="section-label">Capabilities</div>
-  <div class="section-title">Skills</div>
-  <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-name">Agentic AI & LLMs</div>
-      <div class="skill-tags">
-        <span class="stag">LangGraph</span><span class="stag">LangChain</span><span class="stag">MCP</span>
-        <span class="stag">OpenAI</span><span class="stag">Anthropic Claude</span><span class="stag">Gemini/ADK</span>
-        <span class="stag">Human-in-the-loop</span><span class="stag">Agent memory</span><span class="stag">Checkpointing</span>
-      </div>
+<div class="wrap" id="experience">
+  <div class="sec-eye">Career</div>
+  <div class="sec-title">Experience</div>
+  <div class="tl">
+    <div class="ti">
+      <div class="ti-top"><span class="ti-role">Data & AI Engineer</span><span class="ti-dates">Nov 2024 – Present</span></div>
+      <div class="ti-co">Delta Dental · Bay Area, CA</div>
+      <ul class="ti-ul">
+        <li>Building an agentic Risk Advisory system (LangGraph over CVE bulletins, security SOPs) targeting elimination of <strong>30+ hrs/week</strong> of manual on-call impact analysis.</li>
+        <li>MCP tool servers exposing Snowflake, Nucleus Security, and ticketing to multiple LLM clients; ChromaDB retrieval with RAGAS evals and LangSmith + Langfuse tracing.</li>
+        <li><strong>Cut vulnerability reporting from ~20 hours to under 10 minutes/week</strong> — Python pipelines over Nucleus Security API feeding Power BI dashboards for 60+ stakeholders.</li>
+        <li>Delivered the CFO & Board Risk Acceptance dashboard — <strong>eliminated ~20 hrs/week</strong> of manual board-prep work.</li>
+        <li>Snowflake + dbt warehouse consolidating <strong>8+ legacy sources and 2M+ vulnerability records</strong> with RBAC and row-level security.</li>
+      </ul>
     </div>
-    <div class="skill-group purple">
-      <div class="skill-group-name">RAG & Retrieval</div>
-      <div class="skill-tags">
-        <span class="stag">Corrective RAG</span><span class="stag">Hybrid BM25+vector</span><span class="stag">RRF</span>
-        <span class="stag">ChromaDB</span><span class="stag">Qdrant</span><span class="stag">FAISS</span>
-        <span class="stag">pgvector</span><span class="stag">Azure AI Search</span><span class="stag">Text-to-SQL</span>
-      </div>
+    <div class="ti p2">
+      <div class="ti-top"><span class="ti-role">Senior BI Engineer</span><span class="ti-dates">Mar – Sep 2024</span></div>
+      <div class="ti-co p2">Up2Date Technology Solutions</div>
+      <ul class="ti-ul">
+        <li>40+ dbt models (SCD2) at <strong>5M+ records/month</strong>; demand forecasting cut stockouts 20%; A/B testing drove a 12% margin increase.</li>
+      </ul>
     </div>
-    <div class="skill-group">
-      <div class="skill-group-name">Evals & Observability</div>
-      <div class="skill-tags">
-        <span class="stag">RAGAS</span><span class="stag">LLM-as-judge</span><span class="stag">LangSmith</span>
-        <span class="stag">Langfuse</span><span class="stag">OpenTelemetry</span><span class="stag">Prometheus</span>
-        <span class="stag">Grafana</span><span class="stag">Groundedness checks</span>
-      </div>
+    <div class="ti dm">
+      <div class="ti-top"><span class="ti-role">Senior BI Engineer</span><span class="ti-dates">Jan 2017 – Aug 2022</span></div>
+      <div class="ti-co dm">Wipro Technologies · Philips & HSBC</div>
+      <ul class="ti-ul">
+        <li>AWS + Snowflake processing <strong>100GB+/day, 50M+ monthly transactions</strong>; 99.5% reliability; SOX compliance; RLS protecting PII for 10M+ customers.</li>
+      </ul>
     </div>
-    <div class="skill-group green">
-      <div class="skill-group-name">Data Engineering</div>
-      <div class="skill-tags">
-        <span class="stag">Python · Pandas · NumPy</span><span class="stag">SQL (expert)</span>
-        <span class="stag">Snowflake</span><span class="stag">dbt</span><span class="stag">Kafka</span>
-        <span class="stag">Airflow</span><span class="stag">Snowpipe/Streams</span>
-        <span class="stag">AWS S3/Redshift/Glue</span><span class="stag">Databricks</span>
-      </div>
-    </div>
-    <div class="skill-group purple">
-      <div class="skill-group-name">Platform & Governance</div>
-      <div class="skill-tags">
-        <span class="stag">FastAPI</span><span class="stag">Docker</span><span class="stag">Postgres</span>
-        <span class="stag">Redis</span><span class="stag">GitHub Actions CI/CD</span>
-        <span class="stag">RBAC · RLS</span><span class="stag">SOX compliance</span>
-        <span class="stag">Power BI · Tableau</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-name">Education & Certs</div>
-      <div class="skill-tags">
-        <span class="stag">M.S. Data Analytics — SJSU</span>
-        <span class="stag">B.Tech IT — JNTU</span>
-        <span class="stag">SnowPro Core — Snowflake 2026</span>
-        <span class="stag">IEEE Publication 2025</span>
-      </div>
+    <div class="ti dm">
+      <div class="ti-top"><span class="ti-role">BI Developer → ETL Developer</span><span class="ti-dates">2011 – 2017</span></div>
+      <div class="ti-co dm">Value Labs (Maxis Telecom) · TCS (CNA Investments)</div>
+      <ul class="ti-ul">
+        <li>PL/SQL ETL over <strong>15M+ subscriber records/month</strong>, <strong>$200M+ revenue tracked</strong>; 65% cut in processing time via incremental loads.</li>
+      </ul>
     </div>
   </div>
-</section>
+</div>
 <hr class="sep">
 
-<!-- Publication -->
-<section class="section">
-  <div class="section-label">Research</div>
-  <div class="section-title">Publication</div>
-  <div class="pub-card">
+<div class="wrap" id="skills">
+  <div class="sec-eye">Capabilities</div>
+  <div class="sec-title">Skills</div>
+  <div class="sk-grid">
+    <div class="skg"><div class="skg-name">Agentic AI & LLMs</div><div class="sk-tags"><span class="st">LangGraph</span><span class="st">LangChain</span><span class="st">MCP</span><span class="st">OpenAI</span><span class="st">Anthropic Claude</span><span class="st">Gemini/ADK</span><span class="st">Human-in-the-loop</span><span class="st">Agent memory</span></div></div>
+    <div class="skg"><div class="skg-name p2">RAG & Retrieval</div><div class="sk-tags"><span class="st">Corrective RAG</span><span class="st">Hybrid BM25+vector</span><span class="st">RRF</span><span class="st">ChromaDB</span><span class="st">Qdrant</span><span class="st">FAISS</span><span class="st">pgvector</span><span class="st">Text-to-SQL</span></div></div>
+    <div class="skg"><div class="skg-name">Evals & Observability</div><div class="sk-tags"><span class="st">RAGAS</span><span class="st">LLM-as-judge</span><span class="st">LangSmith</span><span class="st">Langfuse</span><span class="st">OpenTelemetry</span><span class="st">Prometheus</span><span class="st">Grafana</span></div></div>
+    <div class="skg"><div class="skg-name gr">Data Engineering</div><div class="sk-tags"><span class="st">Python · Pandas</span><span class="st">SQL (expert)</span><span class="st">Snowflake</span><span class="st">dbt</span><span class="st">Kafka</span><span class="st">Airflow</span><span class="st">AWS S3/Redshift</span><span class="st">Databricks</span></div></div>
+    <div class="skg"><div class="skg-name p2">Platform & Governance</div><div class="sk-tags"><span class="st">FastAPI</span><span class="st">Docker</span><span class="st">Postgres</span><span class="st">Redis</span><span class="st">GitHub Actions</span><span class="st">RBAC · RLS</span><span class="st">SOX compliance</span></div></div>
+    <div class="skg"><div class="skg-name gr">Education & Certs</div><div class="sk-tags"><span class="st">M.S. Data Analytics — SJSU</span><span class="st">SnowPro Core — Snowflake 2026</span><span class="st">IEEE Publication 2025</span></div></div>
+  </div>
+</div>
+<hr class="sep">
+
+<div class="wrap">
+  <div class="sec-eye">Research</div>
+  <div class="sec-title">Publication</div>
+  <div class="pub">
     <div class="pub-icon">📄</div>
     <div>
-      <div class="pub-title">Smart City Traffic Management System</div>
-      <div class="pub-venue">IEEE Conference on Smart Cities · 2025</div>
-      <div class="pub-desc">Real-time DCRNN spatiotemporal traffic forecasting over IoT/CCTV/UAV feeds. YOLOv8 + DeepSORT multi-object tracking on an AWS ingestion pipeline.</div>
+      <div class="pub-t">Smart City Traffic Management System</div>
+      <div class="pub-v">IEEE Conference on Smart Cities · 2025</div>
+      <div class="pub-d">Real-time DCRNN spatiotemporal traffic forecasting over IoT/CCTV/UAV feeds. YOLOv8 + DeepSORT multi-object tracking on an AWS ingestion pipeline.</div>
     </div>
   </div>
-</section>
+</div>
 <hr class="sep">
 
-<!-- Contact -->
-<section class="section" id="contact">
-  <div class="section-label">Get in Touch</div>
-  <div class="section-title">Contact</div>
-  <div class="contact-grid">
-    <a class="contact-card" href="mailto:desharajudeepthi@gmail.com">
-      <div class="contact-type">Email</div>
-      <div class="contact-val">desharajudeepthi@gmail.com</div>
-    </a>
-    <a class="contact-card purple" href="https://linkedin.com/in/deepthidesharaju" target="_blank">
-      <div class="contact-type">LinkedIn</div>
-      <div class="contact-val">linkedin.com/in/deepthidesharaju</div>
-    </a>
-    <a class="contact-card" href="https://github.com/DesharajuDeepthi" target="_blank">
-      <div class="contact-type">GitHub</div>
-      <div class="contact-val">github.com/DesharajuDeepthi</div>
-    </a>
-    <a class="contact-card" href="https://claude.ai/code/artifact/d53579bb-eb37-4cdd-a36d-6a6c3b7d831c" target="_blank">
-      <div class="contact-type">UpgradePilot Showcase</div>
-      <div class="contact-val">Interactive · live data</div>
-    </a>
+<div class="wrap" id="contact">
+  <div class="sec-eye">Get in Touch</div>
+  <div class="sec-title">Contact</div>
+  <div class="ct-grid">
+    <a class="ctc" href="mailto:desharajudeepthi@gmail.com"><div class="ct-type">Email</div><div class="ct-val">desharajudeepthi@gmail.com</div></a>
+    <a class="ctc p2" href="https://linkedin.com/in/deepthidesharaju" target="_blank"><div class="ct-type">LinkedIn</div><div class="ct-val">linkedin.com/in/deepthidesharaju</div></a>
+    <a class="ctc" href="https://github.com/DesharajuDeepthi" target="_blank"><div class="ct-type">GitHub</div><div class="ct-val">github.com/DesharajuDeepthi</div></a>
+    <a class="ctc" href="https://claude.ai/code/artifact/d53579bb-eb37-4cdd-a36d-6a6c3b7d831c" target="_blank"><div class="ct-type">UpgradePilot Showcase</div><div class="ct-val">Live eval output + architecture →</div></a>
   </div>
-</section>
+</div>
 
-<footer>DEEPTHI DESHARAJU · AI ENGINEER · BAY AREA, CA · 2025</footer>
-
-<script>
-// Typewriter role cycling
-const roles = [
-  'Agentic LLM Systems',
-  'LangGraph · RAG · MCP',
-  'Production AI on Enterprise Data',
-  'Evals · Observability · pgvector',
-];
-let ri = 0, ci = 0, deleting = false;
-const el = document.getElementById('role-text');
-function type() {
-  const role = roles[ri];
-  if (!deleting) {
-    el.textContent = role.slice(0, ++ci);
-    if (ci === role.length) { deleting = true; setTimeout(type, 1800); return; }
-  } else {
-    el.textContent = role.slice(0, --ci);
-    if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; setTimeout(type, 300); return; }
-  }
-  setTimeout(type, deleting ? 30 : 55);
-}
-type();
-</script>
+<footer>DEEPTHI DESHARAJU · AI ENGINEER · BAY AREA, CA · desharajudeepthi@gmail.com</footer>
+</body>
+</html>
