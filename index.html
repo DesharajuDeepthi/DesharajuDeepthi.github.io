@@ -115,7 +115,7 @@ h1 em{font-style:normal;color:var(--acc)}
 .ct-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:13px}
 .ctc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;text-decoration:none;display:block;transition:border-color .2s}
 .ctc:hover{border-color:var(--acc)}.ctc.p2:hover{border-color:var(--acc2)}
-.ct-type{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.ct-type{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block}
 .ct-val{font-family:var(--mono);font-size:13px;color:var(--text)}
 footer{text-align:center;padding:36px 20px;font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.06em;border-top:1px solid var(--border)}
 </style>
@@ -134,7 +134,7 @@ footer{text-align:center;padding:36px 20px;font-family:var(--mono);font-size:11p
 
 <section class="hero">
   <div class="eyebrow">AI Engineer · Bay Area, CA · Open to Opportunities</div>
-  <h1>Building AI that<br>works on <em>real data</em></h1>
+  <h1>Building AI that works<br>on <em>real data</em></h1>
   <p class="hero-tagline">
     <strong>Agentic systems, RAG pipelines, and MCP tool servers</strong> —
     grounded in 12 years of owning production data at enterprise scale.
@@ -191,7 +191,7 @@ footer{text-align:center;padding:36px 20px;font-family:var(--mono);font-size:11p
             <span class="chip">Prometheus + Grafana</span><span class="chip">Docker</span>
           </div>
           <div class="p-links">
-            <a class="plink" href="https://github.com/DesharajuDeepthi/codeshift-agent/tree/v2/multi-user-memory" target="_blank">→ GitHub</a>
+            <a class="plink" href="https://github.com/DesharajuDeepthi/codeshift-agent/tree/v2/multi-user-memory" target="_blank">→ Source Code on GitHub</a>
             <a class="plink" href="https://claude.ai/code/artifact/d53579bb-eb37-4cdd-a36d-6a6c3b7d831c" target="_blank">→ Live Showcase (eval output + architecture)</a>
           </div>
         </div>
@@ -202,7 +202,31 @@ footer{text-align:center;padding:36px 20px;font-family:var(--mono);font-size:11p
           <div class="fmet"><div class="fmet-n">8</div><div class="fmet-l">Architecture phases</div></div>
         </div>
       </div>
-      <div class="arch-label" style="margin-top:28px">System Architecture</div>
+      <!-- Eval proof -->
+      <div class="arch-label" style="margin-top:28px">CI Eval Gate — Live Output</div>
+      <div style="background:#04080F;border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:20px;font-family:var(--mono);font-size:12px;line-height:1.75">
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--sur2);border-bottom:1px solid var(--border)">
+          <span style="width:10px;height:10px;border-radius:50%;background:#FF5F57;display:inline-block"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#FEBC2E;display:inline-block"></span>
+          <span style="width:10px;height:10px;border-radius:50%;background:#28C840;display:inline-block"></span>
+          <span style="margin-left:6px;color:var(--muted);font-size:10px;letter-spacing:.04em">uv run python evals/run_evals.py --fail-under 0.7</span>
+        </div>
+        <div style="padding:14px 18px;overflow-x:auto"><pre style="margin:0;color:#8DA4BE">Running: <span style="color:#C8D8E8">fastapi-realworld-example-app</span>...
+  Applicability: <span style="color:#3FB950">SUPPORTED</span>  |  Status: <span style="color:#3FB950">completed</span>  |  0.7s
+  <span style="color:#C8D8E8">applicability       </span>  <span style="color:#F4C542">1.000</span>  <span style="color:#3FB950">██████████  PASS</span>
+  <span style="color:#C8D8E8">finding_count       </span>  <span style="color:#F4C542">1.000</span>  <span style="color:#3FB950">██████████  PASS</span>
+  <span style="color:#C8D8E8">no_hallucination    </span>  <span style="color:#F4C542">1.000</span>  <span style="color:#3FB950">██████████  PASS</span>
+
+Running: <span style="color:#C8D8E8">pydantic</span>...
+  Applicability: <span style="color:#3FB950">UNSUPPORTED</span>  |  Status: terminal  |  0.2s
+  <span style="color:#8DA4BE">[ all 6 scorers: 1.000 PASS ]</span>
+
+<span style="color:#444">════════════════════════════════════════</span>
+<span style="color:#3FB950;font-weight:bold">OVERALL SCORE:  1.000   CI THRESHOLD (0.70):  PASS</span>
+<span style="color:#444">════════════════════════════════════════</span></pre></div>
+      </div>
+
+      <div class="arch-label">System Architecture</div>
       <div class="arch-box">
         <svg viewBox="0 0 820 340" xmlns="http://www.w3.org/2000/svg" width="100%">
           <defs>
